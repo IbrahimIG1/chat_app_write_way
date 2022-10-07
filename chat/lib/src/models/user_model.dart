@@ -27,6 +27,7 @@ class User {
       photoUrl: json['photoUrl'],
       userName: json['userName'],
     );
+    user.id = json['id'];
     return user;
   }
 }
