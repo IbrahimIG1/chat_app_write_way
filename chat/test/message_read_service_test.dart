@@ -11,13 +11,14 @@ void main() {
   Connection? connection;
   MessageReadService? sut;
 
-  setUp(() {
+  setUp(() async {
+    connection = await r.connect(host: '127.0.0.1', port: 28015);
     sut = MessageReadService(r, connection!);
-    createDb(r, connection);
+    await createDb(r, connection!);
   });
-  tearDown(() {
+  tearDown(() async {
     sut!.dispose();
-    cleanDb(r, connection!);
+    await cleanDb(r, connection!);
   });
   test('sent message read success', () async {
     var messageReadModel = MessageReadModel(
@@ -28,14 +29,28 @@ void main() {
     final res = await sut!.sent(messageReadModel);
     expect(res, true);
   });
-  User user = User(
-      active: true,
-      lastSeen: DateTime.now(),
-      photoUrl: 'photoUrl',
-      userName: 'ibrahim');
-  test('successfully subscribe and receive receipts', () {
+  User user = User.fromJson({
+    'id': '1234',
+    'active': true,
+    'lastSeen': DateTime.now(),
+    'userName': 'ibra',
+    'photoUrl': 'image'
+  });
+  test('successfully subscribe and receive receipts', () async {
     sut!.userMessageModelReceivers(user).listen(expectAsync1((receipt) {
           expect(receipt.receiver, user.gId);
         }, count: 2));
+    MessageReadModel receipt1 = MessageReadModel(
+        messageId: '1234',
+        messageStat: MessageStatus.deliverred,
+        messageTime: DateTime.now(),
+        receiver: user.gId!);
+    MessageReadModel receipt2 = MessageReadModel(
+        messageId: '1234',
+        messageStat: MessageStatus.deliverred,
+        messageTime: DateTime.now(),
+        receiver: user.gId!);
+    await sut!.sent(receipt1);
+    await sut!.sent(receipt2);
   });
 }

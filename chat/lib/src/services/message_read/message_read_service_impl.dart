@@ -36,11 +36,15 @@ class MessageReadService implements IMessageReadService {
         .asStream()
         .cast<Feed>()
         .listen((event) {
-          event.forEach((element) {
-            if (element['new_val'] == null) return;
-            final receiptResult = receiptFromFeed(element);
-            _controller.sink.add(receiptResult);
-          });
+          event
+              .forEach((element) {
+                if (element['new_val'] == null) return;
+                final receiptResult = receiptFromFeed(element);
+                _controller.sink.add(receiptResult);
+              })
+              .catchError((error) =>
+                  print('$error Error In userMessageModelReceivers Listen'))
+              .onError((error, stackTrace) => print(error));
         });
     return _controller.stream;
   }

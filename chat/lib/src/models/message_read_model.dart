@@ -1,8 +1,19 @@
+import 'package:flutter/cupertino.dart';
+
 enum MessageStatus { sent, deliverred, read }
 
 extension EnumParsing on MessageStatus {
   String value() {
-    return this.toString().split('.').last;
+    return this
+        .toString()
+        .split('.')
+        .last; // to get last result from this (ReceiptStatus.send => sent)
+  }
+
+  static MessageStatus fromString(String status) {
+    // it take value from me and put it in element.value()
+    return MessageStatus.values
+        .firstWhere((element) => element.value() == status);
   }
 }
 
@@ -19,7 +30,7 @@ class MessageReadModel {
       required this.messageTime,
       required this.receiver});
   Map<String, dynamic> toJson() => {
-        'receipient': receiver,
+        'receiver': receiver,
         'messageId': messageId,
         'messageTime': messageTime,
         'messageStat': messageStat.value(),
@@ -27,7 +38,7 @@ class MessageReadModel {
   factory MessageReadModel.fromJson(Map<String, dynamic> json) {
     var model = MessageReadModel(
         messageId: json['messageId'],
-        messageStat: json['messageStat'],
+        messageStat: EnumParsing.fromString(json['messageStat']),
         messageTime: json['messageTime'],
         receiver: json['receiver']);
     model._id = json['id'];
