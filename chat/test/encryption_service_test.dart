@@ -9,12 +9,13 @@ void main() {
     sut = EncryptionService(encrypter);
   });
   test('it encryption Text', () {
-    String text = 'text';
+    String text = 'this is a message';
     final base64 = RegExp(
         r'^(?:[A-Za-z0-9+\/]{4})*(?:[A=Za=z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A=Za=z0-9+\/]{4})$'); // code to encrypte
     final encrypted = sut!.encrypt(text);
     expect(base64.hasMatch(encrypted), true);
   });
+  
   test('decrypted text', () {
     String text = 'text';
     final encrypt = sut!.encrypt(text);

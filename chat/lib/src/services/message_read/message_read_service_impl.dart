@@ -14,7 +14,7 @@ class MessageReadService implements IMessageReadService {
   @override
   void dispose() {
     _controller.close(); // close Stream
-    _changeFeed!.cancel();
+    // _changeFeed!.cancel();
   }
 
   @override

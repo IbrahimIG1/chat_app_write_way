@@ -42,4 +42,10 @@ class UserService implements IUserService {
     return usersList.map((e) => User.fromJson(e)).toList();
     //usersList to map , get elements from database and pass to fromJson to save in List
   }
+  
+  @override
+  Future<User> fetch(String id) async {
+    final user = await r.table('users').get(id).run(_connection);
+    return User.fromJson(user);
+  }
 }

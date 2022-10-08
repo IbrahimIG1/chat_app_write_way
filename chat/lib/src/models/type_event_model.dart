@@ -1,33 +1,33 @@
-enum typingEvent { start, stop }
+enum Typing { start, stop }
 
-extension EnumParsing on typingEvent {
+extension TypingParser on Typing {
   String value() {
     return this.toString().split('.').last;
   }
 
-  static typingEvent fromString(String status) {
-    return typingEvent.values
-        .firstWhere((element) => element.value() == status);
+  static Typing fromString(String event) {
+    return Typing.values.firstWhere((element) => element.value() == event);
   }
 }
 
-class TypeEventModel {
+class TypingEventModel {
   String get gId => _id!;
   final String from;
   final String to;
-  final typingEvent typingStatus;
+  final Typing event;
   String? _id;
-  TypeEventModel(
-      {required this.from, required this.to, required this.typingStatus});
+  TypingEventModel({required this.from, required this.to, required this.event});
 
   Map<String, dynamic> toJson() => {
         'from': from,
         'to': to,
-        'typingStatus': typingStatus,
+        'event': event.value(),
       };
-  factory TypeEventModel.fromJson(Map<String, dynamic> json) {
-    var model = TypeEventModel(
-        from: json['from'], to: json['to'], typingStatus: json['typingStatus']);
+  factory TypingEventModel.fromJson(Map<String, dynamic> json) {
+    var model = TypingEventModel(
+        from: json['from'],
+        to: json['to'],
+        event: TypingParser.fromString(json['event']));
     model._id = json['id'];
     return model;
   }

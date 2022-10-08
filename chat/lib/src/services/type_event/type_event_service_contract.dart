@@ -1,9 +1,10 @@
 import 'package:chat/src/models/type_event_model.dart';
 import 'package:chat/src/models/user_model.dart';
+import 'package:flutter/foundation.dart';
 
-abstract class ITypingEventService
+abstract class ITypingNotification
 {
-  Future<bool> sent (TypeEventModel typeEventModel);
-  Stream<TypeEventModel> subscribe(User user , List<String>usreIds);
+  Future<bool> sent ({required TypingEventModel event,required User to});
+  Stream<TypingEventModel> subscribe(User user , List<String>usreIds);
   void dispose();
 }

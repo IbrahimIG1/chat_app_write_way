@@ -16,7 +16,7 @@ void main() {
   });
 
   tearDown(() async {
-    // await cleanDb(r, connection!);
+    await cleanDb(r, connection!);
   });
 
   test('create new user in database', () async {
