@@ -8,12 +8,13 @@ import 'package:rethink_db_ns/rethink_db_ns.dart';
 class MessageReadService implements IMessageReadService {
   final RethinkDb r;
   final Connection _connection;
-  final _controller = StreamController<MessageReadModel>.broadcast();
+  final _controller = StreamController<MessageReadModel>.broadcast(); // الى بيضيف الداتا ف الداتابيز
   MessageReadService(this.r, this._connection);
-  StreamSubscription? _changeFeed;
+  StreamSubscription? _changeFeed;  // الى بيسمع التغيرات علشان الكنترولر يضيف الداتا الجديدة
   @override
   void dispose() {
     _controller.close(); // close Stream
+    _changeFeed!.cancel();
   }
 
   @override
