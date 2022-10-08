@@ -11,7 +11,7 @@ void main() {
 
   setUp(() async {
     connection = await r.connect(host: "127.0.0.1", port: 28015);
-    await createDb(r, connection!);
+    await createDb(r, connection!); // create tables first
     sut = UserService(r, connection!);
   });
 
@@ -30,7 +30,6 @@ void main() {
     final userWithId = await sut!.connect(user);
 
     expect(userWithId.id, isNotEmpty);
-    // expect(userWithId.id, isNotEmpty);
   });
   test('get online user', () async {
     final user = User(

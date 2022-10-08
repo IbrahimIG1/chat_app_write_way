@@ -2,7 +2,7 @@
 
 abstract class IUserService
 {
-  Future<User> connect(User user);
-  Future<List<User>> online();
-  Future<void> disConnect(User user);
+  Future<User> connect(User user);  //  set(save) user data on server database
+  Future<List<User>> online();  //  get online users
+  Future<void> disConnect(User user); //  update user active status
 }
