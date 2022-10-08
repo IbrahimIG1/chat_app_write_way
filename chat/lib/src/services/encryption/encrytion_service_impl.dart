@@ -6,7 +6,7 @@ class EncryptionService implements IEncryptionService {
   final _iv = IV.fromLength(16); //  Encrypter lenght
   EncryptionService(this._encrypt);
   @override
-  String dencrypt(String decryptedText) {
+  String decrypt(String decryptedText) {
     final encrypted = Encrypted.from64(decryptedText); // encrypted text
     return _encrypt.decrypt(encrypted, iv: _iv); //  decrypted text
   }

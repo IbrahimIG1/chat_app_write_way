@@ -2,19 +2,23 @@ import 'dart:async';
 
 import 'package:chat/src/models/user_model.dart';
 import 'package:chat/src/models/message_model.dart';
+import 'package:chat/src/services/encryption/encrytion_service_impl.dart';
 import 'package:chat/src/services/message/message_service_contract.dart';
 import 'package:rethink_db_ns/rethink_db_ns.dart';
 
 class MessageService implements IMessageService {
   final RethinkDb r;
   final Connection _connection;
+  final EncryptionService _encryption;
   final _controller = StreamController<
       MessageModel>.broadcast(); // (broadcast) can be listened to more than once.
   StreamSubscription? _changeFeed;
 
   MessageService(
     this.r,
+    
     this._connection,
+    this._encryption,
   );
   @override
   dispose() {
@@ -51,7 +55,7 @@ class MessageService implements IMessageService {
 
   MessageModel _messageFromFeed(feedDate) {
     var data = feedDate['new_val']; // get message and put in data var
-    // data['content'] = _encryption.decrypt( data['content']);  // do dncryption before receive message
+    data['content'] = _encryption.decrypt( data['content']);  // do dncryption before receive message
     return MessageModel.fromJson(
         data); // pass data to fromJson to read the user data
   }
@@ -66,6 +70,7 @@ class MessageService implements IMessageService {
   @override
   Future<bool> sent(MessageModel message) async {
     final data = message.toJson();
+    data['messageContent'] = _encryption.encrypt(message.messageContent);
     final result = await r
         .table('messages')
         .insert(data)

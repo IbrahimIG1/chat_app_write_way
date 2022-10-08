@@ -18,7 +18,7 @@ void main() {
   test('decrypted text', () {
     String text = 'text';
     final encrypt = sut!.encrypt(text);
-    final decryption = sut!.dencrypt(encrypt);
+    final decryption = sut!.decrypt(encrypt);
     expect(decryption, text);
   });
 }
