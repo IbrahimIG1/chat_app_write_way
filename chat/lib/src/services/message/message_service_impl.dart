@@ -16,7 +16,6 @@ class MessageService implements IMessageService {
 
   MessageService(
     this.r,
-    
     this._connection,
     this._encryption,
   );
@@ -55,7 +54,8 @@ class MessageService implements IMessageService {
 
   MessageModel _messageFromFeed(feedDate) {
     var data = feedDate['new_val']; // get message and put in data var
-    data['content'] = _encryption.decrypt( data['content']);  // do dncryption before receive message
+    data['messageContent'] = _encryption
+        .decrypt(data['messageContent']); // do dncryption before receive message
     return MessageModel.fromJson(
         data); // pass data to fromJson to read the user data
   }
