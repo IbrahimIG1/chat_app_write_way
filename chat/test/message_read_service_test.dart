@@ -23,7 +23,7 @@ void main() {
   test('sent message read success', () async {
     var messageReadModel = MessageReadModel(
         messageId: '123',
-        messageStat: MessageStatus.deliverred,
+        messageStat: MessageReceiptStatus.deliverred,
         messageTime: DateTime.now(),
         receiver: '0000');
     final res = await sut!.sent(messageReadModel);
@@ -42,12 +42,12 @@ void main() {
         }, count: 2));
     MessageReadModel receipt1 = MessageReadModel(
         messageId: '1234',
-        messageStat: MessageStatus.deliverred,
+        messageStat: MessageReceiptStatus.deliverred,
         messageTime: DateTime.now(),
         receiver: user.gId!);
     MessageReadModel receipt2 = MessageReadModel(
         messageId: '1234',
-        messageStat: MessageStatus.deliverred,
+        messageStat: MessageReceiptStatus.deliverred,
         messageTime: DateTime.now(),
         receiver: user.gId!);
     await sut!.sent(receipt1);

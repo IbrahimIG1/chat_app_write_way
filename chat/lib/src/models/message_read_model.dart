@@ -1,8 +1,8 @@
 
 
-enum MessageStatus { sent, deliverred, read }
+enum MessageReceiptStatus { sent, deliverred, read }
 
-extension EnumParsing on MessageStatus {
+extension ReceiptEnumParsing on MessageReceiptStatus {
   String value() {
     return this
         .toString()
@@ -10,9 +10,9 @@ extension EnumParsing on MessageStatus {
         .last; // to get last result from this (ReceiptStatus.send => sent)
   }
 
-  static MessageStatus fromString(String status) {
+  static MessageReceiptStatus fromString(String status) {
     // it take value from me and put it in element.value()
-    return MessageStatus.values
+    return MessageReceiptStatus.values
         .firstWhere((element) => element.value() == status);
   }
 }
@@ -22,7 +22,7 @@ class MessageReadModel {
   final String receiver;
   final String messageId;
   final DateTime messageTime;
-  final MessageStatus messageStat;
+  final MessageReceiptStatus messageStat;
   String? _id;
   MessageReadModel(
       {required this.messageId,
@@ -38,7 +38,7 @@ class MessageReadModel {
   factory MessageReadModel.fromJson(Map<String, dynamic> json) {
     var model = MessageReadModel(
         messageId: json['messageId'],
-        messageStat: EnumParsing.fromString(json['messageStat']),
+        messageStat: ReceiptEnumParsing.fromString(json['messageStat']),
         messageTime: json['messageTime'],
         receiver: json['receiver']);
     model._id = json['id'];
