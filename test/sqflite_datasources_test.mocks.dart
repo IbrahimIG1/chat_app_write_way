@@ -304,3 +304,214 @@ class MockDatabase extends _i1.Mock implements _i2.Database {
         ),
       ) as _i2.Batch);
 }
+
+/// A class which mocks [Batch].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBatch extends _i1.Mock implements _i2.Batch {
+  MockBatch() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Future<List<Object?>> commit({
+    bool? exclusive,
+    bool? noResult,
+    bool? continueOnError,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #commit,
+          [],
+          {
+            #exclusive: exclusive,
+            #noResult: noResult,
+            #continueOnError: continueOnError,
+          },
+        ),
+        returnValue: _i3.Future<List<Object?>>.value(<Object?>[]),
+      ) as _i3.Future<List<Object?>>);
+  @override
+  _i3.Future<List<Object?>> apply({
+    bool? noResult,
+    bool? continueOnError,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #apply,
+          [],
+          {
+            #noResult: noResult,
+            #continueOnError: continueOnError,
+          },
+        ),
+        returnValue: _i3.Future<List<Object?>>.value(<Object?>[]),
+      ) as _i3.Future<List<Object?>>);
+  @override
+  void rawInsert(
+    String? sql, [
+    List<Object?>? arguments,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #rawInsert,
+          [
+            sql,
+            arguments,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void insert(
+    String? table,
+    Map<String, Object?>? values, {
+    String? nullColumnHack,
+    _i4.ConflictAlgorithm? conflictAlgorithm,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #insert,
+          [
+            table,
+            values,
+          ],
+          {
+            #nullColumnHack: nullColumnHack,
+            #conflictAlgorithm: conflictAlgorithm,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void rawUpdate(
+    String? sql, [
+    List<Object?>? arguments,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #rawUpdate,
+          [
+            sql,
+            arguments,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void update(
+    String? table,
+    Map<String, Object?>? values, {
+    String? where,
+    List<Object?>? whereArgs,
+    _i4.ConflictAlgorithm? conflictAlgorithm,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [
+            table,
+            values,
+          ],
+          {
+            #where: where,
+            #whereArgs: whereArgs,
+            #conflictAlgorithm: conflictAlgorithm,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void rawDelete(
+    String? sql, [
+    List<Object?>? arguments,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #rawDelete,
+          [
+            sql,
+            arguments,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void delete(
+    String? table, {
+    String? where,
+    List<Object?>? whereArgs,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [table],
+          {
+            #where: where,
+            #whereArgs: whereArgs,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void execute(
+    String? sql, [
+    List<Object?>? arguments,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [
+            sql,
+            arguments,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void query(
+    String? table, {
+    bool? distinct,
+    List<String>? columns,
+    String? where,
+    List<Object?>? whereArgs,
+    String? groupBy,
+    String? having,
+    String? orderBy,
+    int? limit,
+    int? offset,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #query,
+          [table],
+          {
+            #distinct: distinct,
+            #columns: columns,
+            #where: where,
+            #whereArgs: whereArgs,
+            #groupBy: groupBy,
+            #having: having,
+            #orderBy: orderBy,
+            #limit: limit,
+            #offset: offset,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void rawQuery(
+    String? sql, [
+    List<Object?>? arguments,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #rawQuery,
+          [
+            sql,
+            arguments,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+}

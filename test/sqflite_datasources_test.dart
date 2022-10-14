@@ -6,20 +6,21 @@ import 'package:sqflite/sqflite.dart';
 import 'package:write_way_chat/data/datasources/datasource_impl.dart';
 import 'package:write_way_chat/models/chat_model.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
-
 import 'sqflite_datasources_test.mocks.dart';
 
 @GenerateMocks([Database])
+@GenerateMocks([Batch])
+
 // @GenerateNiceMocks([
 //   MockSpec<MockDatabase>(),
 // ])
 void main() {
   SqflitDataSource? sut;
   MockDatabase? database;
-  // MockSBatch? batch;
+  MockBatch? batch;
   setUp(() {
     database = MockDatabase();
-    // batch = MockSBatch();
+    batch = MockBatch();
     sut = SqflitDataSource(database!);
   });
   final message = MessageModel.fromJson({
@@ -77,5 +78,33 @@ void main() {
     verify(database!.query('messages',
             where: anyNamed('where'), whereArgs: anyNamed('whereArgs')))
         .called(1);
+  });
+  test('should perform a database update a message', () async {
+    final localMessage =
+        LocalMessageModel('1234', message, MessageReceiptStatus.sent);
+    when(
+      database!.update('messages', localMessage.toMap(),
+          where: anyNamed('where'),
+          whereArgs: anyNamed('whereArgs'),
+          conflictAlgorithm: ConflictAlgorithm.replace),
+    ).thenAnswer((realInvocation) async => 1);
+    await sut!.updateMessage(localMessage);
+    verify(
+      database!.update('messages', localMessage.toMap(),
+          where: anyNamed('where'),
+          whereArgs: anyNamed('whereArgs'),
+          conflictAlgorithm: ConflictAlgorithm.replace),
+    ).called(1);
+  });
+  test('should perform a database batch delete a message', () async {
+    final chatId = '111';
+    when(database!.batch()).thenReturn(batch!);
+    await sut!.deleteChat(chatId);
+    verifyInOrder([
+      database!.batch(),
+      batch!.delete('messages', where: anyNamed('where'), whereArgs: [chatId]),
+      batch!.delete('chats', where: anyNamed('where'), whereArgs: [chatId]),
+      batch!.commit(noResult: true)
+    ]);
   });
 }

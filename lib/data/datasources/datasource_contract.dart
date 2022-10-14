@@ -9,7 +9,7 @@ abstract class IDatasource
   Future<void>addMessage(LocalMessageModel message); //   add the local message to database
   Future<Chat>findChat(String chatId);
   Future<List<Chat>>findAllChats();
-  Future<void>updateChat(LocalMessageModel message);
+  Future<void>updateMessage(LocalMessageModel message);
   Future<List<LocalMessageModel>>findMesasges(String chatId);
   Future<void>deleteChat(String chatId);
   

@@ -97,7 +97,7 @@ class SqflitDataSource implements IDatasource {
   }
 
   @override
-  Future<void> updateChat(LocalMessageModel message) async {
+  Future<void> updateMessage(LocalMessageModel message) async {
     await _db.update('messages', message.toMap(),
         where: 'id = ?',
         whereArgs: [message.message.gId],
