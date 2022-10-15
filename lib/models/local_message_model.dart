@@ -1,5 +1,4 @@
 import 'package:chat/chat.dart';
-import 'package:write_way_chat/models/chat_model.dart';
 
 class LocalMessageModel {
   String get gId => _id!;

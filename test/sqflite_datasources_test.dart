@@ -8,7 +8,7 @@ import 'package:write_way_chat/models/chat_model.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 import 'sqflite_datasources_test.mocks.dart';
 
-@GenerateMocks([Database])
+@GenerateMocks([Database])  // @GenerateMocks to init mockito class and run with out null error
 @GenerateMocks([Batch])
 
 // @GenerateNiceMocks([
@@ -23,6 +23,7 @@ void main() {
     batch = MockBatch();
     sut = SqflitDataSource(database!);
   });
+  //  message receve from database 
   final message = MessageModel.fromJson({
     'from': '111',
     'to': '222',
@@ -31,7 +32,7 @@ void main() {
     'id': '4444'
   });
   test('should perform insert of chat to the database', () async {
-    final chat = Chat('1234');
+    final chat = Chat('1234'); // add this chat to database
     // database.transaction((p0) => null)
     try {
       when(database!.insert('chats', chat.toMap(),

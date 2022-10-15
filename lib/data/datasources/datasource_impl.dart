@@ -8,21 +8,21 @@ class SqflitDataSource implements IDatasource {
   SqflitDataSource(this._db);
   @override
   Future<void> addChat(Chat chat) async {
-    await _db.insert('chats', chat.toMap(),
+    await _db.insert('chats', chat.toMap(), // save chat model in database
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
   Future<void> addMessage(LocalMessageModel message) async {
-    await _db.insert('messages', message.toMap(),
+    await _db.insert('messages', message.toMap(), // save message model in database
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
   Future<void> deleteChat(String chatId) async {
-    final batch = _db.batch();
-    batch.delete('messages', where: 'chat_id = ?', whereArgs: [chatId]);
-    batch.delete('chats', where: 'id = ?', whereArgs: [chatId]);
+    final batch = _db.batch();  // batch help to remove both thing in the same time 
+    batch.delete('messages', where: 'chat_id = ?', whereArgs: [chatId]);  // delete messages from database
+    batch.delete('chats', where: 'id = ?', whereArgs: [chatId]);  // delete chats from database
     await batch.commit(noResult: true);
   }
 
@@ -88,9 +88,12 @@ class SqflitDataSource implements IDatasource {
   }
 
   @override
+  // get message from messages table in database
   Future<List<LocalMessageModel>> findMesasges(String chatId) async {
     final listOfMaps =
-        await _db.query('messages', where: 'chat_id = ?', whereArgs: [chatId]);
+        await _db.query('messages', where: 'chat_id = ?', whereArgs: [chatId]); // get the chat_id row in table
+
+        // get the information from chat_id row in table (LocalMessageModel messages) and return it one by one
     return listOfMaps
         .map<LocalMessageModel>((map) => LocalMessageModel.fromMap(map))
         .toList();
