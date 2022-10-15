@@ -8,21 +8,27 @@ class SqflitDataSource implements IDatasource {
   SqflitDataSource(this._db);
   @override
   Future<void> addChat(Chat chat) async {
+    print('in add chat create');
     await _db.insert('chats', chat.toMap(), // save chat model in database
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
   Future<void> addMessage(LocalMessageModel message) async {
-    await _db.insert('messages', message.toMap(), // save message model in database
+    await _db.insert(
+        'messages', message.toMap(), // save message model in database
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
   Future<void> deleteChat(String chatId) async {
-    final batch = _db.batch();  // batch help to remove both thing in the same time 
-    batch.delete('messages', where: 'chat_id = ?', whereArgs: [chatId]);  // delete messages from database
-    batch.delete('chats', where: 'id = ?', whereArgs: [chatId]);  // delete chats from database
+    final batch =
+        _db.batch(); // batch help to remove both thing in the same time
+    batch.delete('messages',
+        where: 'chat_id = ?',
+        whereArgs: [chatId]); // delete messages from database
+    batch.delete('chats',
+        where: 'id = ?', whereArgs: [chatId]); // delete chats from database
     await batch.commit(noResult: true);
   }
 
@@ -67,22 +73,35 @@ class SqflitDataSource implements IDatasource {
   }
 
   @override
-  Future<Chat> findChat(String chatId) async {
+  Future findChat(String chatId) async {
+    print('in find chat func ');
     return await _db.transaction((txn) async {
+    print('start transaction ');
+
       final listOfChatMap =
           await txn.query('chats', where: 'id = ?', whereArgs: [chatId]);
+      if (listOfChatMap.isEmpty) {
+        print('List of chat is empty ');
+        return null;
+      }
       final unread = Sqflite.firstIntValue(await txn.rawQuery(
           'SELECT COUNT(*) FROM MESSAGES WHERE chat_id = ? AND receipt = ?',
           [chatId, 'deliverred']));
+        print('unread done');
+
       final mostRecentMessages = await txn.query('messages',
           where: 'chat_id = ?',
           whereArgs: [chatId],
           orderBy: 'created_at DESC',
           limit: 1);
+        print('mostRecentMessages done');
+          
       final chat = Chat.fromMap(listOfChatMap.first);
       chat.unread = unread!;
-      chat.mostRecentMessages =
+      if (mostRecentMessages.isNotEmpty) {
+        chat.mostRecentMessages =
           LocalMessageModel.fromMap(mostRecentMessages.first);
+      }
       return chat;
     });
   }
@@ -90,10 +109,11 @@ class SqflitDataSource implements IDatasource {
   @override
   // get message from messages table in database
   Future<List<LocalMessageModel>> findMesasges(String chatId) async {
-    final listOfMaps =
-        await _db.query('messages', where: 'chat_id = ?', whereArgs: [chatId]); // get the chat_id row in table
+    final listOfMaps = await _db.query('messages',
+        where: 'chat_id = ?',
+        whereArgs: [chatId]); // get the chat_id row in table
 
-        // get the information from chat_id row in table (LocalMessageModel messages) and return it one by one
+    // get the information from chat_id row in table (LocalMessageModel messages) and return it one by one
     return listOfMaps
         .map<LocalMessageModel>((map) => LocalMessageModel.fromMap(map))
         .toList();
