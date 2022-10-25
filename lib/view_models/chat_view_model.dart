@@ -1,7 +1,8 @@
 import 'package:chat/chat.dart';
-import 'package:write_way_chat/data/datasources/datasource_contract.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 import 'package:write_way_chat/view_models/base_view_model.dart';
+
+import '../data/datasource_contract.dart';
 
 class ChatViewModel extends BaseViewModel {
   final IDatasource _datasource;

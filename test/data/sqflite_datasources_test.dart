@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:write_way_chat/data/datasources/datasource_impl.dart';
+import 'package:write_way_chat/data/datasource_impl.dart';
 import 'package:write_way_chat/models/chat_model.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 import 'sqflite_datasources_test.mocks.dart';

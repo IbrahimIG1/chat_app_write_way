@@ -2,7 +2,7 @@ import 'package:chat/chat.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:write_way_chat/data/datasources/datasource_contract.dart';
+import 'package:write_way_chat/data/datasource_contract.dart';
 import 'package:write_way_chat/models/chat_model.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 import 'package:write_way_chat/view_models/chat_view_model.dart';

@@ -1,7 +1,8 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:write_way_chat/data/datasources/datasource_contract.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 import 'package:write_way_chat/models/chat_model.dart';
+
+import 'datasource_contract.dart';
 
 class SqflitDataSource implements IDatasource {
   Database _db;

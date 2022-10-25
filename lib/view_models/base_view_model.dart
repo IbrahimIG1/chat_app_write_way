@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:write_way_chat/data/datasources/datasource_contract.dart';
 import 'package:write_way_chat/models/local_message_model.dart';
 
+import '../data/datasource_contract.dart';
 import '../models/chat_model.dart';
 
 abstract class BaseViewModel {
